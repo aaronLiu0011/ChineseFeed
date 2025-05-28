@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中国饲料市场互动分析平台</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Application Structure Plan: 
+        Structure: A single-page application with a fixed top navigation bar allowing users to jump to distinct thematic sections: "市场概览" (Market Overview), "主要饲料品种" (Main Feed Varieties), "供需动态" (Supply & Demand), "渠道变革" (Channel Evolution), "新兴趋势与创新" (Emerging Trends & Innovations), and "核心洞察与展望" (Key Insights & Outlook).
+        Interaction & Flow:
+        - Users start at "市场概览".
+        - Navigation clicks smoothly scroll or reveal the selected section.
+        - "主要饲料品种" will use interactive tabs/buttons to switch between detailed views (charts and text) for different feed types (pig, poultry, etc.).
+        - "供需动态" will feature charts for livestock trends and raw material prices.
+        - "渠道变革" will use clickable cards or an interactive diagram to explain different e-commerce models (B2B, O2O, C2B) and their pros/cons.
+        - "新兴趋势与创新" will highlight key innovations like smart farming and customization through descriptive text and potentially clickable elements for company examples.
+        Rationale: This thematic, section-based structure is chosen over a linear report replication because it allows users to directly access topics of interest and interact with data in a non-linear fashion, enhancing exploration and understanding. The interactive elements within each section (charts, tabs, clickable cards) aim to make complex information more digestible and engaging. This approach prioritizes usability by breaking down a dense report into manageable, explorable segments.
+    -->
+    <!-- Visualization & Content Choices: 
+        Section: 市场概览
+        - Report Info: Overall production (tons), value (yuan), market concentration.
+        - Goal: Inform about market size, growth, and structure.
+        - Viz/Method: Line chart (Chart.js) for production/value over years. Key metrics displayed as styled text cards (HTML/Tailwind). Text block for concentration.
+        - Interaction: Chart tooltips.
+        - Justification: Line chart clearly shows trends. Cards provide quick stats.
+        Section: 主要饲料品种
+        - Report Info: Production data for pig, meat poultry, egg poultry, aquatic, pet, ruminant feeds (Table 1).
+        - Goal: Compare and detail individual feed types.
+        - Viz/Method: Tab/button-based navigation for feed types. Each tab shows a line chart (Chart.js) for that feed type's production trend and a text summary. A summary bar chart (Chart.js) compares all types for a selected year.
+        - Interaction: Tab selection updates chart and text. Chart tooltips.
+        - Justification: Tabs allow focused views. Line charts show individual trends. Bar chart aids comparison.
+        Section: 供需动态 (Demand Side)
+        - Report Info: Pig/poultry farming data, livestock numbers (Table 3).
+        - Goal: Show drivers of feed demand.
+        - Viz/Method: Line charts (Chart.js) for pig/sow and poultry/egg-layer存栏量. Text summaries of farming trends.
+        - Interaction: Chart tooltips.
+        - Justification: Line charts visualize livestock population trends effectively.
+        Section: 供需动态 (Supply Side)
+        - Report Info: Regional production, raw material prices (Table 2), import dependency.
+        - Goal: Explain supply factors and cost pressures.
+        - Viz/Method: Line/Bar chart (Chart.js) for raw material price trends (corn, soy, fishmeal). Text on import dependency and regional concentration.
+        - Interaction: Chart tooltips.
+        - Justification: Charts clearly show price volatility.
+        Section: 渠道变革 (E-commerce)
+        - Report Info: E-commerce models (O2O, B2B, C2B from Table 4), advantages/challenges, farmer adoption.
+        - Goal: Explain the rise and complexity of e-commerce in feed.
+        - Viz/Method: Interactive cards (HTML/Tailwind grid/flex) for e-commerce models, detailing platforms, pros, cons. Bulleted lists for overall advantages/challenges and farmer adoption factors.
+        - Interaction: Clicking cards reveals more details.
+        - Justification: Cards provide a structured way to present diverse e-commerce models.
+        Section: 新兴趋势与创新
+        - Report Info: Livestreaming, smart farming (New Hope, Wen's, Dabeinong initiatives), feed customization.
+        - Goal: Highlight future directions.
+        - Viz/Method: Text descriptions. Clickable elements/cards for company examples in smart farming.
+        - Interaction: Click to expand details on company initiatives.
+        - Justification: Text for qualitative insights, cards for specific examples.
+    -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link.active { color: #d97706; border-bottom-color: #d97706; font-weight: 600; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .tab-button.active { background-color: #059669; color: white; }
+        .card-clickable { cursor: pointer; transition: transform 0.2s ease-in-out; }
+        .card-clickable:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-700">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between py-3">
+                <h1 class="text-2xl font-bold text-amber-600 mb-2 sm:mb-0">中国饲料市场互动分析平台</h1>
+                <nav id="mainNav" class="flex flex-wrap justify-center sm:justify-end space-x-2 sm:space-x-4">
+                    <a href="#overview" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">市场概览</a>
+                    <a href="#varieties" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">主要品种</a>
+                    <a href="#supplyDemand" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">供需动态</a>
+                    <a href="#channels" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">渠道变革</a>
+                    <a href="#emergingTrends" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">新兴趋势</a>
+                    <a href="#insights" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">核心洞察</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <section id="overview" class="section space-y-6">
+            <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">市场概览</h2>
+            <p class="text-lg text-slate-600">本部分概述了中国饲料市场的总体规模、产值、近期趋势以及行业集中度。中国作为全球最大的饲料生产国，其市场动态对全球饲料行业具有重要影响。通过关键指标和图表，您可以了解到市场整体的发展状况和结构性变化。</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-emerald-700">总产量 (2024年)</h3>
+                    <p class="text-3xl font-bold">3.15亿吨</p>
+                    <p class="text-sm text-slate-500">比上年下降2.1%</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-emerald-700">总产值 (2024年)</h3>
+                    <p class="text-3xl font-bold">1.26万亿元</p>
+                    <p class="text-sm text-slate-500">比上年下降10%</p>
+                </div>
+                 <div class="bg-white p-4 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-emerald-700">行业企业数量</h3>
+                    <p class="text-3xl font-bold">1.35万+</p>
+                    <p class="text-sm text-slate-500">饲料及饲料添加剂生产企业</p>
+                </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold text-emerald-700 mb-4">工业饲料总产量趋势</h3>
+                <div class="chart-container">
+                    <canvas id="totalProductionChart"></canvas>
+                </div>
+                <p class="mt-4 text-sm text-slate-600">图表展示了近年来中国工业饲料总产量的变化情况。尽管整体市场体量巨大，但近期数据显示市场出现小幅回调。点击图表中的数据点可以查看具体年份的产量。</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold text-emerald-700 mb-2">市场集中度</h3>
+                <p class="text-slate-600">中国饲料市场集中度逐步提升。2024年，年产量10万吨以上的饲料生产厂合计产量占全国总产量的<span class="font-bold text-amber-700">61.8%</span>。年产百万吨以上规模饲料企业集团达<span class="font-bold text-amber-700">34家</span>，其中<span class="font-bold text-amber-700">7家</span>超千万吨。这反映了行业整合和规模化效应的增强。</p>
+            </div>
+        </section>
+
+        <section id="varieties" class="section space-y-6">
+            <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">主要饲料品种分析</h2>
+            <p class="text-lg text-slate-600">本部分聚焦中国饲料市场的主要品种，包括猪饲料、禽饲料（肉禽和蛋禽）、水产饲料、宠物饲料和反刍动物饲料。您可以通过下方的标签页切换查看各品种的产量趋势、市场特点及影响因素。品种结构的变化与下游养殖业的发展息息相关。</p>
+            
+            <div class="flex flex-wrap gap-2 mb-4" id="feedTypeTabs">
+                <button data-type="pig" class="tab-button bg-slate-200 hover:bg-emerald-500 hover:text-white text-slate-700 font-semibold py-2 px-4 rounded-md text-sm sm:text-base">猪饲料</button>
+                <button data-type="broiler" class="tab-button bg-slate-200 hover:bg-emerald-500 hover:text-white text-slate-700 font-semibold py-2 px-4 rounded-md text-sm sm:text-base">肉禽饲料</button>
+                <button data-type="layer" class="tab-button bg-slate-200 hover:bg-emerald-500 hover:text-white text-slate-700 font-semibold py-2 px-4 rounded-md text-sm sm:text-base">蛋禽饲料</button>
+                <button data-type="aqua" class="tab-button bg-slate-200 hover:bg-emerald-500 hover:text-white text-slate-700 font-semibold py-2 px-4 rounded-md text-sm sm:text-base">水产饲料</button>
+                <button data-type="pet" class="tab-button bg-slate-200 hover:bg-emerald-500 hover:text-white text-slate-700 font-semibold py-2 px-4 rounded-md text-sm sm:text-base">宠物饲料</button>
+                <button data-type="ruminant" class="tab-button bg-slate-200 hover:bg-emerald-500 hover:text-white text-slate-700 font-semibold py-2 px-4 rounded-md text-sm sm:text-base">反刍饲料</button>
+            </div>
+
+            <div id="feedTypeContent" class="bg-white p-6 rounded-lg shadow space-y-4">
+                <h3 id="feedTypeTitle" class="text-2xl font-semibold text-emerald-700">选择一个饲料品种查看详情</h3>
+                <div class="chart-container">
+                    <canvas id="feedVarietyChart"></canvas>
+                </div>
+                <p id="feedTypeDescription" class="text-slate-600">这里将显示选中饲料品种的详细信息和产量趋势图。</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold text-emerald-700 mb-4">各饲料品种产量对比 (2024年全年)</h3>
+                <div class="chart-container h-[400px] max-h-[500px] md:h-[450px]">
+                    <canvas id="feedVarietiesComparisonChart"></canvas>
+                </div>
+                 <p class="mt-4 text-sm text-slate-600">此图表比较了2024年中国主要饲料品种的产量，直观展示了各品种在市场中的份额。猪饲料和肉禽饲料依然是产量最大的两个品种。</p>
+            </div>
+        </section>
+
+        <section id="supplyDemand" class="section space-y-6">
+            <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">供需动态分析</h2>
+            <p class="text-lg text-slate-600">本部分探讨中国饲料市场的供给与需求两端的核心驱动因素。需求侧主要分析下游生猪养殖和家禽养殖的规模、周期性波动及其对饲料需求的影响。供给侧则关注饲料生产能力、区域分布以及关键原材料（如玉米、豆粕）的供应和价格变动。</p>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow space-y-4">
+                    <h3 class="text-2xl font-semibold text-emerald-700">需求侧：下游养殖业</h3>
+                    <p class="text-slate-600"><strong>生猪养殖：</strong>中国是全球最大的生猪养殖国。“猪周期”特征显著，猪价波动直接影响饲料需求。行业正向“养殖屠宰一体化”发展以规避风险。2022年末生猪存栏量约4.53亿头。</p>
+                    <div class="chart-container h-[250px] max-h-[300px]">
+                         <canvas id="pigStockChart"></canvas>
+                    </div>
+                    <p class="text-slate-600 mt-4"><strong>家禽养殖：</strong>规模庞大，禽肉和禽蛋产量世界领先。养殖业正加速向标准化、规模化、智能化转型。2023年全国家禽存栏约67.8亿只。</p>
+                     <div class="chart-container h-[250px] max-h-[300px]">
+                         <canvas id="poultryStockChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow space-y-4">
+                    <h3 class="text-2xl font-semibold text-emerald-700">供给侧：生产与原料</h3>
+                    <p class="text-slate-600"><strong>生产能力与区域分布：</strong>中国饲料生产能力巨大。山东、广东等省份产量领先，形成区域性生产集群。2024年13个省份产量超1000万吨。</p>
+                    <p class="text-slate-600"><strong>原材料供应与价格：</strong>对进口蛋白饲料（如大豆）依赖度高。玉米、豆粕等原料价格波动剧烈，影响饲料成本。企业通过期货套保、豆粕减量替代等方式应对。</p>
+                    <div class="chart-container h-[300px] max-h-[350px]">
+                        <canvas id="rawMaterialPriceChart"></canvas>
+                    </div>
+                     <p class="mt-2 text-sm text-slate-600">图表显示主要饲料原料如玉米和豆粕的采购价格变化趋势。价格波动对饲料生产成本有直接影响。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="channels" class="section space-y-6">
+            <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">渠道变革分析</h2>
+            <p class="text-lg text-slate-600">本部分深入探讨中国饲料市场流通渠道的演变。从传统的直销与经销商网络，到蓬勃发展的电商渠道，再到各类新兴创新模式。重点分析电商渠道的多元化运营模式、线上销售的优劣势，以及农户对线上购买行为的接受度。</p>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold text-emerald-700 mb-3">传统渠道转型</h3>
+                <p class="text-slate-600">传统经销商模式面临挑战，领先企业正提升<span class="font-bold text-amber-700">直销比例</span>，并从“卖产品”转向“提供综合服务”（如猪场管理、金融等），以增强客户黏性。大型养殖集团议价能力强，水产养殖仍以中小户为主，饲料企业利润空间较大。</p>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow space-y-4">
+                <h3 class="text-2xl font-semibold text-emerald-700 mb-4">电商渠道深度分析</h3>
+                <p class="text-slate-600 mb-4">电商渠道在饲料市场，特别是宠物饲料和农资领域影响力日益增长。除了传统的B2C零售，还涌现出多种创新电商模式。</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="ecommerceModelsContainer">
+                </div>
+                <p class="text-slate-600 mt-6"><strong>线上销售优势：</strong>市场覆盖广、效率提升、成本效益、增强互动与信任、危机应对韧性强。</p>
+                <p class="text-slate-600"><strong>线上销售挑战：</strong>质量控制与信任缺失（假冒伪劣）、物流复杂性（大宗、冷链）、高运营成本（O2O）、个性化服务不足。</p>
+                <p class="text-slate-600 mt-4"><strong>农户线上购买行为：</strong>受教育程度、风险偏好、电商经验、基础设施、政府支持、感知价值与成本等多种因素影响。信任和数字素养是关键。</p>
+            </div>
+        </section>
+
+        <section id="emergingTrends" class="section space-y-6">
+            <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">新兴趋势与创新模式</h2>
+            <p class="text-lg text-slate-600">中国饲料市场正积极拥抱科技创新，催生了一系列新兴渠道和创新模式。本部分将探讨社交电商与直播带货的兴起、智慧养殖与饲料供应链的数字化转型，以及饲料定制化生产的潜力与实践。</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-emerald-700 mb-2">社交电商与直播带货</h3>
+                    <div class="text-5xl text-center text-emerald-500 mb-3">🛍️</div>
+                    <p class="text-slate-600">抖音、快手等平台成为重要渠道。直播带货互动性强，易建立信任，门槛低，转化率高。对饲料这类需专业知识和信任的产品尤为关键，企业可直面农户营销和服务。</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-emerald-700 mb-2">饲料定制化生产与线上平台</h3>
+                    <div class="text-5xl text-center text-emerald-500 mb-3">⚙️</div>
+                    <p class="text-slate-600">精准营养是未来方向。新希望六和“鸿瞳数字营养系统”、老乡鸡农牧的智能平台等正推动配方精准化。线上平台可作为农户输入数据、获取定制推荐的接口，提升透明度和信任度。</p>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow mt-6">
+                <h3 class="text-2xl font-semibold text-emerald-700 mb-4">智慧养殖与饲料供应链数字化</h3>
+                 <div class="text-5xl text-center text-emerald-500 mb-3">🤖</div>
+                <p class="text-slate-600 mb-4">畜牧业加速向精准、自动化、绿色养殖发展。物联网(IoT)设备实现自动化库存、预测分析、供应链可视化。大型企业大力投资数字化转型：</p>
+                <ul class="list-disc list-inside space-y-2 text-slate-600">
+                    <li><strong>新希望六和：</strong>“业数管一体”数字化转型，覆盖研发、养殖、生产、供应链、销售、服务。建立数字化物流平台。</li>
+                    <li><strong>温氏股份：</strong>全产业链数字化转型和智能化升级，利用AI和大数据提高效率。</li>
+                    <li><strong>大北农集团（农信互联）：</strong>构建农业互联网金融生态，“猪联网”提供生产、交易、金融服务。</li>
+                </ul>
+                <p class="mt-3 text-slate-600">数字化已成为现代饲料供应链的核心基础设施，推动行业从产品销售向综合解决方案转变。</p>
+            </div>
+        </section>
+
+        <section id="insights" class="section space-y-6">
+            <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">核心洞察与展望</h2>
+            <p class="text-lg text-slate-600">综合分析中国饲料市场的各项数据和趋势，本部分提炼核心洞察，并对市场未来发展方向进行展望。市场转型升级、技术创新以及渠道多元化是当前及未来的主旋律。</p>
+            
+            <div class="bg-white p-6 rounded-lg shadow space-y-4">
+                <h3 class="text-2xl font-semibold text-emerald-700">核心洞察</h3>
+                <ul class="list-disc list-inside space-y-2 text-slate-600">
+                    <li>市场规模庞大但增长波动，集中化趋势明显，头部企业优势扩大。</li>
+                    <li>猪饲料受“猪周期”影响大，肉禽饲料稳定，宠物饲料高增长。</li>
+                    <li>对进口原料依赖度高，价格波动是长期挑战，促使企业风险管理和寻求替代。</li>
+                    <li>传统渠道向直销和服务转型，电商渠道（B2B, O2O, C2B, 直播）崛起并多元化。</li>
+                    <li>智慧养殖和供应链数字化是核心驱动力，大型企业引领转型。</li>
+                    <li>饲料定制化和精准营养是未来发展方向。</li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold text-emerald-700">未来展望</h3>
+                <p class="text-slate-600">中国饲料市场将持续深化整合。数字化和智能化将是驱动行业发展的核心动力。饲料企业需持续投资技术创新，优化供应链，构建多元渠道，并深化与下游养殖户的合作，以应对市场挑战，抓住新兴机遇，实现可持续发展。从单纯的产品销售转向提供数据驱动的综合营养和管理解决方案将是关键。</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-8 mt-12 text-center">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 中国饲料市场分析平台。根据提供的数据报告生成。</p>
+            <p class="text-sm mt-1">信息仅供参考。数据来源：综合报告数据。</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const mainNavLinks = document.querySelectorAll('#mainNav a');
+    const sections = document.querySelectorAll('.section');
+    const feedTypeTabsContainer = document.getElementById('feedTypeTabs');
+    const feedTypeTitle = document.getElementById('feedTypeTitle');
+    const feedTypeDescription = document.getElementById('feedTypeDescription');
+    
+    let feedVarietyChartInstance = null;
+    let totalProductionChartInstance = null;
+    let pigStockChartInstance = null;
+    let poultryStockChartInstance = null;
+    let rawMaterialPriceChartInstance = null;
+    let feedVarietiesComparisonChartInstance = null;
+
+    const feedData = {
+        general: {
+            labels: ["2020年", "2022年", "2024年H1", "2024全年"],
+            datasets: [
+                {
+                    label: '工业饲料总产量 (万吨)',
+                    data: [25276.1, 30223, 14539, 31503.1],
+                    borderColor: '#059669', // emerald-600
+                    backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                    fill: true,
+                    tension: 0.1
+                }
+            ]
+        },
+        pig: {
+            labels: ["2020年", "2022年", "2024年H1", "2024全年"],
+            datasets: [{
+                label: '猪饲料产量 (万吨)',
+                data: [8922.5, 14040, 6630, 14391.3],
+                borderColor: '#0ea5e9', // sky-500
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "猪饲料是中国饲料市场中占比最大的品种之一，其产量受“猪周期”、非洲猪瘟等因素影响波动较大。2024年全年产量为1.439亿吨，同比下降3.9%。"
+        },
+        broiler: { // 肉禽
+            labels: ["2020年", "2024年H1", "2024全年"],
+            datasets: [{
+                label: '肉禽饲料产量 (万吨)',
+                data: [9175.8, 4496, 9754.2],
+                borderColor: '#f97316', // orange-500
+                backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "肉禽饲料需求受益于肉禽产能持续高位。2024年全年产量9754.2万吨，同比增长2.6%。"
+        },
+        layer: { // 蛋禽
+            labels: ["2020年", "2024年H1", "2024全年"],
+            datasets: [{
+                label: '蛋禽饲料产量 (万吨)',
+                data: [3351.9, 1531, 3236.1],
+                borderColor: '#a855f7', // purple-500
+                backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "蛋禽饲料需求在2024年有所下降，全年产量3236.1万吨，同比下降1.2%，受禽蛋消费、养殖盈利等影响。"
+        },
+        aqua: {
+            labels: ["2020年", "2024年H1", "2024全年"],
+            datasets: [{
+                label: '水产饲料产量 (万吨)',
+                data: [2123.6, 967, 2262], // Table 1 has 2024全年 as 2262
+                borderColor: '#3b82f6', // blue-500
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "水产饲料需求在2024年不及预期，全年产量2262万吨，同比下降3.5%。"
+        },
+        pet: {
+            labels: ["2024年H1", "2024全年"], // Assuming 2020 data might not be directly comparable or available in same context
+            datasets: [{
+                label: '宠物饲料产量 (万吨)',
+                data: [74, 159.9],
+                borderColor: '#ec4899', // pink-500
+                backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "宠物饲料行业保持强劲增长，2024年全年产量159.9万吨，同比增长9.3%。"
+        },
+        ruminant: {
+            labels: ["2020年", "2024年H1", "2024全年"],
+            datasets: [{
+                label: '反刍动物饲料产量 (万吨)',
+                data: [1318.8, 731, 1449.4],
+                borderColor: '#10b981', // emerald-500
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "反刍动物饲料持续下降，2024年全年产量1449.4万吨，同比下降13.3%，主要受奶价及牛羊肉价格弱势影响。"
+        },
+        pigStock: { // 生猪存栏
+            labels: ["2021年", "2022年末"],
+            datasets: [{
+                label: '生猪存栏量 (万头)',
+                data: [45480, 45256],
+                borderColor: '#ef4444', // red-500
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        poultryStock: { // 家禽存栏
+            labels: ["2023年(总)", "2023年(蛋鸡)", "2025年4月(在产蛋鸡)"],
+            datasets: [{
+                label: '家禽存栏量 (亿只)',
+                data: [67.8, 11.89, 11.3], // Note: units vary, this is illustrative
+                borderColor: '#eab308', // yellow-500
+                backgroundColor: 'rgba(234, 179, 8, 0.1)',
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        rawMaterialPrices: {
+            labels: ["玉米(2024H1)", "豆粕(2024H1)", "鱼粉(2024H1)"],
+            datasets: [{
+                label: '原料采购均价 (元/吨)',
+                data: [2524, 3680, 14697],
+                backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 206, 86, 0.6)', 'rgba(75, 192, 192, 0.6)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)'],
+                borderWidth: 1
+            }]
+        },
+        feedComparison2024: {
+            labels: ["猪饲料", "肉禽饲料", "蛋禽饲料", "水产饲料", "反刍饲料", "宠物饲料"],
+            datasets: [{
+                label: '2024年全年产量 (万吨)',
+                data: [14391.3, 9754.2, 3236.1, 2262, 1449.4, 159.9],
+                backgroundColor: [
+                    'rgba(239, 68, 68, 0.6)', // red
+                    'rgba(249, 115, 22, 0.6)', // orange
+                    'rgba(168, 85, 247, 0.6)', // purple
+                    'rgba(59, 130, 246, 0.6)', // blue
+                    'rgba(16, 185, 129, 0.6)', // emerald
+                    'rgba(236, 72, 153, 0.6)' // pink
+                ],
+                borderColor: [
+                    'rgba(239, 68, 68, 1)',
+                    'rgba(249, 115, 22, 1)',
+                    'rgba(168, 85, 247, 1)',
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(236, 72, 153, 1)'
+                ],
+                borderWidth: 1
+            }]
+        }
+    };
+
+    function createOrUpdateChart(chartInstance, canvasId, type, data, options = {}) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+        const defaultOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: false, ticks: { callback: function(value) { return value + ' 万吨'; } } },
+                x: { ticks: { callback: function(value) { const label = this.getLabelForValue(value); return label.length > 8 ? label.match(/.{1,8}/g) : label; } } }
+            },
+            plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } }
+        };
+        return new Chart(ctx, { type, data, options: {...defaultOptions, ...options} });
+    }
+    
+    function createBarChart(chartInstance, canvasId, data, options = {}) {
+         const ctx = document.getElementById(canvasId).getContext('2d');
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+        const defaultOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, ticks: { callback: function(value) { return value; } } }, // Generic y-axis
+                x: { ticks: { callback: function(value) { const label = this.getLabelForValue(value); return label.length > 6 ? label.match(/.{1,6}/g) : label; } } }
+            },
+            plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } }
+        };
+        return new Chart(ctx, { type: 'bar', data, options: {...defaultOptions, ...options} });
+    }
+
+    function activateSection(hash) {
+        sections.forEach(section => {
+            if ('#' + section.id === hash) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+        mainNavLinks.forEach(link => {
+            if (link.getAttribute('href') === hash) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    mainNavLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetHash = this.getAttribute('href');
+            window.location.hash = targetHash;
+        });
+    });
+
+    window.addEventListener('hashchange', function () {
+        activateSection(window.location.hash || '#overview');
+    });
+
+    activateSection(window.location.hash || '#overview');
+
+    totalProductionChartInstance = createOrUpdateChart(totalProductionChartInstance, 'totalProductionChart', 'line', feedData.general);
+    
+    pigStockChartInstance = createOrUpdateChart(pigStockChartInstance, 'pigStockChart', 'line', feedData.pigStock, { scales: { y: { ticks: { callback: function(value) { return value + ' 万头';} } } } });
+    poultryStockChartInstance = createOrUpdateChart(poultryStockChartInstance, 'poultryStockChart', 'bar', feedData.poultryStock, { scales: { y: { ticks: { callback: function(value) { return value + ' 亿只';} } } } });
+    rawMaterialPriceChartInstance = createBarChart(rawMaterialPriceChartInstance, 'rawMaterialPriceChart', feedData.rawMaterialPrices, { scales: { y: { ticks: { callback: function(value) { return value + ' 元/吨';} } } } });
+    feedVarietiesComparisonChartInstance = createBarChart(feedVarietiesComparisonChartInstance, 'feedVarietiesComparisonChart', feedData.feedComparison2024, { indexAxis: 'y', scales: { y: { ticks: { callback: function(value) { const label = this.getLabelForValue(value); return label.length > 8 ? label.match(/.{1,8}/g) : label; } } }, x: { ticks: { callback: function(value) { return value + ' 万吨';} } } } });
+
+
+    if (feedTypeTabsContainer) {
+        feedTypeTabsContainer.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') {
+                const feedType = e.target.dataset.type;
+                const buttons = feedTypeTabsContainer.querySelectorAll('button');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                feedTypeTitle.textContent = e.target.textContent + " 产量趋势";
+                feedTypeDescription.textContent = feedData[feedType].description;
+                feedVarietyChartInstance = createOrUpdateChart(feedVarietyChartInstance, 'feedVarietyChart', 'line', feedData[feedType]);
+            }
+        });
+        // Activate the first tab by default
+        feedTypeTabsContainer.querySelector('button').click();
+    }
+
+    const ecommerceModels = [
+        { name: "B2B电商", icon: "🏢", details: "如阿里巴巴1688、京东供销平台。提供智能选品、批量采购、供应链金融。优势：提高效率、降成本。挑战：平台标准化、投入大。" },
+        { name: "O2O/整合零售", icon: "🏪", details: "如盒马鲜生。线上线下融合，门店即仓，快速配送。优势：提升体验、数据驱动。挑战：运营成本高、品控难。" },
+        { name: "C2B/社交电商", icon: "🧑‍🤝‍🧑", details: "如拼多多。需求驱动生产，社交拼团。优势：降库存风险、快速响应。挑战：产品标准化难、议价能力依赖。" },
+        { name: "直播带货", icon: "📺", details: "抖音、快手等。实时互动，KOL推荐。优势：互动强、信任度高、门槛低。挑战：品控、虚假宣传、主播依赖。" },
+        { name: "农业垂直电商", icon: "🌱", details: "C2B/C2F (定制生产宅配), F2C (农场直供)。优势：直接采购建信任。挑战：物流、规模化。" }
+    ];
+
+    const ecommerceModelsContainer = document.getElementById('ecommerceModelsContainer');
+    if (ecommerceModelsContainer) {
+        ecommerceModels.forEach(model => {
+            const card = document.createElement('div');
+            card.className = 'bg-slate-50 p-4 rounded-lg shadow-md border border-slate-200 card-clickable';
+            card.innerHTML = `
+                <div class="flex items-center mb-2">
+                    <span class="text-3xl mr-3">${model.icon}</span>
+                    <h4 class="text-lg font-semibold text-amber-700">${model.name}</h4>
+                </div>
+                <p class="text-sm text-slate-600">${model.details}</p>
+            `;
+            ecommerceModelsContainer.appendChild(card);
+        });
+    }
+});
+</script>
+</body>
+</html>
