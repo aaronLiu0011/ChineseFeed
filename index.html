@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>China Feed Market Interactive Analysis Platform</title>
+    <title>Interactive Analysis Platform for China's Feed Market</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
-       .chart-container { position: relative; width: 100%; max-width: 700px; margin-left: auto; margin-right: auto; height: 350px; max-height: 450px; }
-        @media (min-width: 768px) {.chart-container { height: 400px; } }
-       .nav-link { transition: all 0.3s ease; }
-       .nav-link.active { color: #d97706; border-bottom-color: #d97706; font-weight: 600; }
-       .section { display: none; }
-       .section.active { display: block; }
-       .tab-button.active { background-color: #059669; color: white; }
-       .card-clickable { cursor: pointer; transition: transform 0.2s ease-in-out; }
-       .card-clickable:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .chart-container { position: relative; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 300px; max-height: 400px; }
+        @media (min-width: 768px) { .chart-container { height: 350px; } }
+        .nav-link { transition: all 0.3s ease; }
+        .nav-link.active { color: #d97706; border-bottom-color: #d97706; font-weight: 600; }
+        .section { display: none; }
+        .section.active { display: block; }
+        .tab-button.active { background-color: #059669; color: white; }
+        .card-clickable { cursor: pointer; transition: transform 0.2s ease-in-out; }
+        .card-clickable:hover { transform: translateY(-4px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-700">
@@ -24,10 +24,10 @@
     <header class="bg-white shadow-md sticky top-0 z-50">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col sm:flex-row items-center justify-between py-3">
-                <h1 class="text-2xl font-bold text-amber-600 mb-2 sm:mb-0">China Feed Market Interactive Analysis Platform</h1>
+                <h1 class="text-2xl font-bold text-amber-600 mb-2 sm:mb-0">Interactive Analysis Platform for China's Feed Market</h1>
                 <nav id="mainNav" class="flex flex-wrap justify-center sm:justify-end space-x-2 sm:space-x-4">
                     <a href="#overview" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">Market Overview</a>
-                    <a href="#varieties" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">Main Varieties</a>
+                    <a href="#varieties" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">Main Feed Varieties</a>
                     <a href="#supplyDemand" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">Supply & Demand</a>
                     <a href="#channels" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">Channel Evolution</a>
                     <a href="#emergingTrends" class="nav-link px-2 py-1 sm:px-3 sm:py-2 text-sm sm:text-base text-slate-600 hover:text-amber-600 border-b-2 border-transparent">Emerging Trends</a>
@@ -40,43 +40,43 @@
     <main class="container mx-auto p-4 sm:p-6 lg:p-8">
         <section id="overview" class="section space-y-6">
             <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">Market Overview</h2>
-            <p class="text-lg text-slate-600">This section provides an overview of China's feed market, including its overall size, output value, recent trends, and industry concentration. As the world's largest feed producer, China's market dynamics have a significant impact on the global feed industry. Through key indicators and charts, you can understand the overall development and structural changes of the market.</p>
+            <p class="text-lg text-slate-600">This section provides an overview of China's feed market size, output value, recent trends, and industry concentration. As the world's largest feed producer, China's market dynamics significantly influence the global feed industry. Through key indicators and charts, you can understand the overall development and structural changes in the market.</p>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div class="bg-white p-4 rounded-lg shadow">
                     <h3 class="text-xl font-semibold text-emerald-700">Total Production (2024)</h3>
-                    <p class="text-3xl font-bold">315 Million Tons</p>
-                    <p class="text-sm text-slate-500">Down 2.1% year-on-year [1]</p>
+                    <p class="text-3xl font-bold">315.03 million tons</p>
+                    <p class="text-sm text-slate-500">2.1% decrease from previous year</p>
                 </div>
                 <div class="bg-white p-4 rounded-lg shadow">
                     <h3 class="text-xl font-semibold text-emerald-700">Total Output Value (2024)</h3>
-                    <p class="text-3xl font-bold">CNY 1.26 Trillion</p>
-                    <p class="text-sm text-slate-500">Down 10% year-on-year [1]</p>
+                    <p class="text-3xl font-bold">1.26 trillion CNY</p>
+                    <p class="text-sm text-slate-500">10% decrease from previous year</p>
                 </div>
                  <div class="bg-white p-4 rounded-lg shadow">
                     <h3 class="text-xl font-semibold text-emerald-700">Number of Enterprises</h3>
                     <p class="text-3xl font-bold">13,500+</p>
-                    <p class="text-sm text-slate-500">Feed and feed additive production enterprises [2]</p>
+                    <p class="text-sm text-slate-500">Feed and feed additive producers</p>
                 </div>
             </div>
 
             <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-2xl font-semibold text-emerald-700 mb-4">China Industrial Feed Total Production and Output Value Trends</h3>
+                <h3 class="text-2xl font-semibold text-emerald-700 mb-4">Industrial Feed Total Production Trend</h3>
                 <div class="chart-container">
                     <canvas id="totalProductionChart"></canvas>
                 </div>
-                <p class="mt-4 text-sm text-slate-600">The chart shows the changes in China's total industrial feed production and output value in recent years. Although the overall market volume is huge, recent data indicates a slight pullback in the market. Click on the data points in the chart to view specific annual production and output values.</p>
+                <p class="mt-4 text-sm text-slate-600">The chart illustrates the changes in China's total industrial feed production in recent years. Although the overall market volume is substantial, recent data shows a slight pullback. Click on data points in the chart to view specific annual production figures.</p>
             </div>
 
             <div class="bg-white p-6 rounded-lg shadow">
                 <h3 class="text-2xl font-semibold text-emerald-700 mb-2">Market Concentration</h3>
-                <p class="text-slate-600">Market concentration in China's feed industry is gradually increasing. In 2024, feed production plants with an annual output exceeding 100,000 tons accounted for <span class="font-bold text-amber-700">61.8%</span> of the national total production.[3] There are <span class="font-bold text-amber-700">34</span> feed enterprise groups with an annual output of over one million tons, of which <span class="font-bold text-amber-700">7</span> have an annual output exceeding 10 million tons.[3] This reflects the strengthening of industry integration and economies of scale.</p>
+                <p class="text-slate-600">Market concentration in China's feed industry is gradually increasing. In 2024, feed producers with an annual output exceeding 100,000 tons accounted for <span class="font-bold text-amber-700">61.8%</span> of the national total feed production. There are <span class="font-bold text-amber-700">34</span> feed enterprise groups with an annual output of over one million tons, of which <span class="font-bold text-amber-700">7</span> groups exceed 10 million tons. This reflects the strengthening of industry integration and economies of scale.</p>
             </div>
         </section>
 
         <section id="varieties" class="section space-y-6">
             <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">Main Feed Varieties Analysis</h2>
-            <p class="text-lg text-slate-600">This section focuses on the main varieties in China's feed market, including pig feed, poultry feed (broiler and layer), aquatic feed, pet feed, and ruminant feed. You can switch between tabs below to view the production trends, market characteristics, and influencing factors for each variety. Changes in the feed structure are closely related to the development of the downstream animal husbandry industry.</p>
+            <p class="text-lg text-slate-600">This section focuses on the main feed varieties in the Chinese market, including pig feed, poultry feed (broiler and layer), aquatic feed, pet feed, and ruminant feed. You can switch between tabs below to view the production trends, market characteristics, and influencing factors for each variety. Changes in the feed structure are closely related to the development of the downstream aquaculture industry.</p>
             
             <div class="flex flex-wrap gap-2 mb-4" id="feedTypeTabs">
                 <button data-type="pig" class="tab-button bg-slate-200 hover:bg-emerald-500 hover:text-white text-slate-700 font-semibold py-2 px-4 rounded-md text-sm sm:text-base">Pig Feed</button>
@@ -96,60 +96,413 @@
             </div>
             
             <div class="bg-white p-6 rounded-lg shadow">
-                <h3 class="text-2xl font-semibold text-emerald-700 mb-4">Comparison of Feed Varieties Production (Full Year 2024)</h3>
+                <h3 class="text-2xl font-semibold text-emerald-700 mb-4">Comparison of Feed Varieties Production (2024 Full Year)</h3>
                 <div class="chart-container h-[400px] max-h-[500px] md:h-[450px]">
                     <canvas id="feedVarietiesComparisonChart"></canvas>
                 </div>
-                 <p class="mt-4 text-sm text-slate-600">This chart compares the production of major feed varieties in China for the full year 2024, visually showing each variety's market share. Pig feed and broiler feed remain the two largest production categories.[3]</p>
+                 <p class="mt-4 text-sm text-slate-600">This chart compares the production of major feed varieties in China for the full year 2024, visually showing each variety's market share. Pig feed and broiler feed remain the two largest production categories.</p>
             </div>
         </section>
 
         <section id="supplyDemand" class="section space-y-6">
             <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">Supply & Demand Dynamics Analysis</h2>
-            <p class="text-lg text-slate-600">This section explores the core driving factors of supply and demand in China's feed market. The demand side primarily analyzes the scale and cyclical fluctuations of downstream pig and poultry farming and their impact on feed demand. The supply side focuses on feed production capacity, regional distribution, and the supply and price changes of key raw materials (such as corn and soybean meal).</p>
+            <p class="text-lg text-slate-600">This section explores the core driving factors of supply and demand in China's feed market. The demand side analyzes the scale and cyclical fluctuations of downstream pig and poultry farming and their impact on feed demand. The supply side focuses on feed production capacity, regional distribution, and price changes of key raw materials (such as corn and soybean meal).</p>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white p-6 rounded-lg shadow space-y-4">
-                    <h3 class="text-2xl font-semibold text-emerald-700">Demand Side: Downstream Animal Husbandry</h3>
-                    <p class="text-slate-600"><strong>Pig Farming:</strong> China is the world's largest pig farming country. The "pig cycle" is significant, and pig price fluctuations directly affect feed demand. The industry is moving towards "integrated farming and slaughtering" to mitigate risks.[4]</p>
+                    <h3 class="text-2xl font-semibold text-emerald-700">Demand Side: Downstream Livestock Farming</h3>
+                    <p class="text-slate-600"><strong>Pig Farming:</strong> China is the world's largest pig farming country. The "pig cycle" is significant, with price fluctuations directly impacting feed demand. The industry is moving towards "integrated farming and slaughtering" to mitigate risks. Pig inventory at the end of 2023 was approximately 434.22 million heads.</p>
                     <div class="chart-container h-[250px] max-h-[300px]">
                          <canvas id="pigStockChart"></canvas>
                     </div>
-                    <p class="text-slate-600 mt-4"><strong>Sow Stock:</strong> The stock of breeding sows is a core component ensuring pig production capacity. Its fluctuations directly impact future pig slaughter volume and feed demand.</p>
-                    <div class="chart-container h-[250px] max-h-[300px]">
-                         <canvas id="sowStockChart"></canvas>
-                    </div>
-                    <p class="text-slate-600 mt-4"><strong>Poultry Farming:</strong> The scale of poultry farming is enormous, with poultry meat and egg production leading the world.[5] The industry is accelerating its transformation towards standardization, large-scale, intelligent, and green farming.[6]</p>
+                    <p class="text-slate-600 mt-4"><strong>Poultry Farming:</strong> China has a vast poultry farming scale, with poultry meat and egg production leading globally. The industry is accelerating its transformation towards standardization, large-scale, intelligent, and green farming. Total poultry inventory at the end of 2023 was approximately 6.78 billion birds.</p>
                      <div class="chart-container h-[250px] max-h-[300px]">
                          <canvas id="poultryStockChart"></canvas>
-                    </div>
-                    <p class="text-slate-600 mt-4"><strong>In-production Layer Stock:</strong> The number of in-production laying hens directly affects egg production and layer feed demand.</p>
-                     <div class="chart-container h-[250px] max-h-[300px]">
-                         <canvas id="eggLayerStockChart"></canvas>
                     </div>
                 </div>
 
                 <div class="bg-white p-6 rounded-lg shadow space-y-4">
                     <h3 class="text-2xl font-semibold text-emerald-700">Supply Side: Production & Raw Materials</h3>
-                    <p class="text-slate-600"><strong>Production Capacity and Regional Distribution:</strong> China has immense feed production capacity.[2] Provinces like Shandong and Guangdong lead in output, forming regional production clusters.[3]</p>
-                    <p class="text-slate-600"><strong>Raw Material Supply and Prices:</strong> There is a high dependence on imported protein feeds (e.g., soybeans).[2] Prices of raw materials like corn and soybean meal fluctuate significantly, affecting feed costs.[7] Companies are responding by using financial tools like futures hedging and promoting soybean meal reduction and substitution.[2, 8]</p>
+                    <p class="text-slate-600"><strong>Production Capacity & Regional Distribution:</strong> China possesses immense feed production capacity. Provinces like Shandong and Guangdong lead in output, forming regional production clusters. In 2024, 13 provinces had feed output exceeding 10 million tons.</p>
+                    <p class="text-slate-600"><strong>Raw Material Supply & Prices:</strong> High dependence on imported protein feeds (e.g., soybeans). Prices of raw materials like corn and soybean meal fluctuate significantly, affecting feed costs. Enterprises use futures hedging and soybean meal reduction strategies to cope.</p>
                     <div class="chart-container h-[300px] max-h-[350px]">
                         <canvas id="rawMaterialPriceChart"></canvas>
                     </div>
-                     <p class="mt-2 text-sm text-slate-600">The chart shows the price trends of major feed raw materials such as corn, soybean meal, and fishmeal. Price fluctuations directly impact feed production costs.</p>
+                     <p class="mt-2 text-sm text-slate-600">The chart shows the price trends of major feed raw materials like corn and soybean meal. Price fluctuations directly impact feed production costs.</p>
                 </div>
             </div>
         </section>
 
         <section id="channels" class="section space-y-6">
             <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">Channel Evolution Analysis</h2>
-            <p class="text-lg text-slate-600">This section delves into the evolution of distribution channels in China's feed market. From traditional direct sales and dealer networks to thriving e-commerce channels and various emerging innovative models. It focuses on analyzing the diversified operational models of e-commerce channels, the advantages and disadvantages of online sales, and farmers' acceptance of online purchasing behavior.</p>
+            <p class="text-lg text-slate-600">This section delves into the evolution of distribution channels in China's feed market. From traditional direct sales and dealer networks to thriving e-commerce channels and various emerging innovative models. It focuses on the diversified operational models of e-commerce channels, the advantages and disadvantages of online sales, and farmers' acceptance of online purchasing behavior.</p>
 
             <div class="bg-white p-6 rounded-lg shadow">
                 <h3 class="text-2xl font-semibold text-emerald-700 mb-3">Traditional Channel Transformation</h3>
-                <p class="text-slate-600">Traditional dealer models face challenges [9], leading companies are increasing their <span class="font-bold text-amber-700">direct sales ratio</span> (e.g., Dabeinong's pig feed direct sales exceeding 40% [9]), and shifting from "selling products" to "providing comprehensive services" (such as pig farm management, financing, etc.) [9] to enhance customer loyalty. Large farming groups have strong bargaining power [10], while aquatic farming is still dominated by small and medium-sized farmers, giving feed companies more pricing power and higher profit margins in aquatic feed sales.[10, 11]</p>
+                <p class="text-slate-600">Traditional dealer models face challenges, prompting leading enterprises to increase <span class="font-bold text-amber-700">direct sales ratios</span> and shift from merely "selling products" to "providing comprehensive services" (e.g., pig farm management, financing) to enhance customer loyalty. Large-scale farming groups have strong bargaining power, while aquatic farming, still dominated by small and medium-sized farmers, offers higher profit margins for feed companies.</p>
             </div>
             
             <div class="bg-white p-6 rounded-lg shadow space-y-4">
                 <h3 class="text-2xl font-semibold text-emerald-700 mb-4">In-depth Analysis of E-commerce Channels</h3>
-                <p class="text-slate-600 mb-4">E-commerce channels are showing increasing influence in the feed market,
+                <p class="text-slate-600 mb-4">E-commerce channels are showing increasing influence in the feed market, especially in pet feed and agricultural inputs. In addition to traditional B2C retail, various innovative e-commerce models have emerged.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="ecommerceModelsContainer">
+                </div>
+                <p class="text-slate-600 mt-6"><strong>Advantages of Online Sales:</strong> Broad market coverage, improved efficiency, cost-effectiveness, enhanced interaction and trust, strong resilience in crises.</p>
+                <p class="text-slate-600"><strong>Challenges of Online Sales:</strong> Quality control and lack of trust (counterfeits), logistical complexity (bulk, cold chain), high operating costs (O2O), insufficient personalization.</p>
+                <p class="text-slate-600"><strong>Farmers' Online Purchasing Behavior:</strong> Influenced by factors such as education level, risk preference, e-commerce experience, infrastructure, government support, perceived value, and cost. Trust and digital literacy are key.</p>
+            </div>
+        </section>
+
+        <section id="emergingTrends" class="section space-y-6">
+            <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">Emerging Trends & Innovative Models</h2>
+            <p class="text-lg text-slate-600">China's feed market is actively embracing technological innovation, developing a series of emerging channels and innovative models to meet the demands of modern aquaculture. This section will explore the rise of social e-commerce and live-streaming, the digital transformation of smart farming and feed supply chains, and the potential and practice of customized feed production.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-emerald-700 mb-2">Social E-commerce & Live-streaming</h3>
+                    <div class="text-5xl text-center text-emerald-500 mb-3">🛍️</div>
+                    <p class="text-slate-600">Platforms like Douyin and Kuaishou are becoming important channels. Live-streaming offers high interactivity, builds trust easily, has low entry barriers, and high conversion rates. This is particularly crucial for feed products that require professional knowledge and trust, allowing enterprises to directly market and serve farmers.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <h3 class="text-xl font-semibold text-emerald-700 mb-2">Customized Feed Production & Online Platforms</h3>
+                    <div class="text-5xl text-center text-emerald-500 mb-3">⚙️</div>
+                    <p class="text-slate-600">Precision nutrition is a key future direction. New Hope Liuhe's "Hongtong Digital Nutrition System" and Lao Xiang Ji's smart platforms are driving feed formula precision. Online platforms can serve as interfaces for farmers to input specific animal data and receive customized feed recommendations, enhancing transparency and trust.</p>
+                </div>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow mt-6">
+                <h3 class="text-2xl font-semibold text-emerald-700 mb-4">Smart Farming & Digitalization of Feed Supply Chain</h3>
+                 <div class="text-5xl text-center text-emerald-500 mb-3">🤖</div>
+                <p class="text-slate-600 mb-4">China's livestock industry is accelerating its move towards precision, automated, and green farming. IoT devices enable automated inventory, predictive analytics, and real-time supply chain visibility. Major enterprises are heavily investing in digital transformation:</p>
+                <ul class="list-disc list-inside space-y-2 text-slate-600">
+                    <li><strong>New Hope Liuhe:</strong> Implements an "industry-digital-management integrated" strategy, closely combining business with digital technology across its four major industries and six key areas.</li>
+                    <li><strong>Wens Foodstuff Group:</strong> Actively promotes digital transformation and intelligent upgrades across its entire industry chain, leveraging AI and big data for precise control and unified management.</li>
+                    <li><strong>Dabeinong Group (Nongxin Internet):</strong> Built an agricultural internet and financial ecosystem, with "Pig Internet" providing production, transaction, and financial services to pig farmers.</li>
+                </ul>
+                <p class="mt-3 text-slate-600">Digitalization has become a core infrastructure for modern feed supply chains, driving the industry's shift from product sales to comprehensive solution provision.</p>
+            </div>
+        </section>
+
+        <section id="insights" class="section space-y-6">
+            <h2 class="text-3xl font-semibold text-amber-600 border-b pb-2">Key Insights & Outlook</h2>
+            <p class="text-lg text-slate-600">Based on a comprehensive analysis of data and trends in China's feed market, this section extracts key insights and provides an outlook on the future development direction of the market. Market transformation and upgrading, technological innovation, and channel diversification are the main themes for the present and future.</p>
+            
+            <div class="bg-white p-6 rounded-lg shadow space-y-4">
+                <h3 class="text-2xl font-semibold text-emerald-700">Key Insights</h3>
+                <ul class="list-disc list-inside space-y-2 text-slate-600">
+                    <li>The market is vast but growth fluctuates, with a clear trend towards concentration and expanding advantages for leading enterprises.</li>
+                    <li>Pig feed is highly volatile due to the "pig cycle," broiler feed remains stable, and pet feed shows high growth.</li>
+                    <li>High dependence on imported raw materials and price fluctuations pose long-term challenges, prompting enterprises to manage risks and seek alternatives.</li>
+                    <li>Traditional channels are transforming towards direct sales and service provision, while e-commerce channels (B2B, O2O, C2B, live-streaming) are emerging and diversifying.</li>
+                    <li>Smart farming and supply chain digitalization are core drivers, with large enterprises leading the transformation.</li>
+                    <li>Feed customization and precision nutrition are key future development directions.</li>
+                </ul>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-2xl font-semibold text-emerald-700">Future Outlook</h3>
+                <p class="text-slate-600">China's feed market will continue to deepen integration. Digitalization and intelligence will be the core drivers of industry development. Feed enterprises need to continuously invest in technological innovation, optimize supply chain management, build diversified channels, and actively explore deeper cooperation models with downstream farmers to cope with market fluctuations, seize emerging opportunities, and achieve sustainable development. Shifting from mere product sales to providing data-driven comprehensive nutrition and management solutions will be crucial.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-800 text-slate-300 py-8 mt-12 text-center">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 China Feed Market Analysis Platform. Generated based on provided data report.</p>
+            <p class="text-sm mt-1">Information for reference only. Data sources: Comprehensive report data.</p>
+        </div>
+    </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const mainNavLinks = document.querySelectorAll('#mainNav a');
+    const sections = document.querySelectorAll('.section');
+    const feedTypeTabsContainer = document.getElementById('feedTypeTabs');
+    const feedTypeTitle = document.getElementById('feedTypeTitle');
+    const feedTypeDescription = document.getElementById('feedTypeDescription');
+    
+    let feedVarietyChartInstance = null;
+    let totalProductionChartInstance = null;
+    let pigStockChartInstance = null;
+    let poultryStockChartInstance = null;
+    let rawMaterialPriceChartInstance = null;
+    let feedVarietiesComparisonChartInstance = null;
+
+    const feedData = {
+        general: {
+            labels: ["2018", "2019", "2020", "2021", "2022", "2023", "2024 Full Year"],
+            datasets: [
+                {
+                    label: 'Total Industrial Feed Production (million tons)',
+                    data: [237.63, 228.85, 252.76, 293.443, 302.23, 321.627, 315.031],
+                    borderColor: '#059669', // emerald-600
+                    backgroundColor: 'rgba(5, 150, 105, 0.1)',
+                    fill: true,
+                    tension: 0.1
+                }
+            ]
+        },
+        pig: {
+            labels: ["2018", "2019", "2020", "2021", "2022", "2023", "2024 Full Year"],
+            datasets: [{
+                label: 'Pig Feed Production (million tons)',
+                data: [104.43, 76.63, 89.23, 130.765, 135.98, 149.752, 143.913],
+                borderColor: '#0ea5e9', // sky-500
+                backgroundColor: 'rgba(14, 165, 233, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "Pig feed is one of the largest categories in China's feed market, with production highly influenced by the 'pig cycle' and African swine fever. Full-year production in 2024 was 143.913 million tons, a 3.9% decrease year-on-year."
+        },
+        broiler: { // Meat Poultry
+            labels: ["2018", "2019", "2020", "2021", "2022", "2023", "2024 Full Year"],
+            datasets: [{
+                label: 'Broiler Feed Production (million tons)',
+                data: [69.98, 84.65, 91.76, 89.096, 89.25, 95.108, 97.542],
+                borderColor: '#f97316', // orange-500
+                backgroundColor: 'rgba(249, 115, 22, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "Broiler feed demand benefits from sustained high broiler production capacity. Full-year production in 2024 was 97.542 million tons, an increase of 2.6% year-on-year."
+        },
+        layer: { // Egg Poultry
+            labels: ["2018", "2019", "2020", "2021", "2022", "2023", "2024 Full Year"],
+            datasets: [{
+                label: 'Layer Feed Production (million tons)',
+                data: [28.45, 31.17, 33.52, 32.314, 32.11, 32.744, 32.361],
+                borderColor: '#a855f7', // purple-500
+                backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "Layer feed demand saw a slight decrease in 2024, with full-year production at 32.361 million tons, down 1.2% year-on-year, influenced by poultry egg consumption and farming profitability."
+        },
+        aqua: {
+            labels: ["2018", "2019", "2020", "2021", "2022", "2023", "2024 Full Year"],
+            datasets: [{
+                label: 'Aquatic Feed Production (million tons)',
+                data: [21.96, 22.03, 21.24, 22.93, 25.26, 23.444, 22.62],
+                borderColor: '#3b82f6', // blue-500
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "Aquatic feed demand was lower than expected in 2024, with full-year production at 22.62 million tons, a 3.5% decrease year-on-year."
+        },
+        pet: {
+            labels: ["2018", "2019", "2020", "2021", "2022", "2023", "2024 Full Year"],
+            datasets: [{
+                label: 'Pet Feed Production (million tons)',
+                data: [0.79, 0.87, 0.96, 1.13, 1.24, 1.463, 1.599],
+                borderColor: '#ec4899', // pink-500
+                backgroundColor: 'rgba(236, 72, 153, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "The pet feed industry continues its strong growth momentum, with full-year production in 2024 reaching 1.599 million tons, an increase of 9.3% year-on-year."
+        },
+        ruminant: {
+            labels: ["2018", "2019", "2020", "2021", "2022", "2023", "2024 Full Year"],
+            datasets: [{
+                label: 'Ruminant Feed Production (million tons)',
+                data: [10.17, 11.09, 13.19, 14.803, 16.17, 16.715, 14.494],
+                borderColor: '#10b981', // emerald-500
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                fill: true,
+                tension: 0.1
+            }],
+            description: "Ruminant feed production continued to decline, with full-year production in 2024 at 14.494 million tons, down 13.3% year-on-year, mainly due to weak milk and beef/mutton prices affecting farmer profitability."
+        },
+        pigStock: { // Pig Inventory
+            labels: ["2020 Q4", "2021 Q4", "2022 Q4", "2023 Q4"],
+            datasets: [{
+                label: 'Pig Inventory (million heads)',
+                data: [370.39, 420.20, 452.56, 434.22],
+                borderColor: '#ef4444', // red-500
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                fill: false,
+                tension: 0.1
+            },
+            {
+                label: 'Breeding Sow Inventory (million heads)',
+                data: [38.22, 43.29, 43.90, 41.42],
+                borderColor: '#facc15', // yellow-500
+                backgroundColor: 'rgba(250, 204, 21, 0.1)',
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        poultryStock: { // Poultry Inventory
+            labels: ["2020 Year-end", "2021 Year-end", "2022 Year-end", "2023 Year-end"],
+            datasets: [{
+                label: 'Total Poultry Inventory (billion birds)',
+                data: [6.78, 6.79, 6.77, 6.78],
+                borderColor: '#eab308', // yellow-500
+                backgroundColor: 'rgba(234, 179, 8, 0.1)',
+                fill: false,
+                tension: 0.1
+            }]
+        },
+        rawMaterialPrices: {
+            labels: ["Corn (2021)", "Corn (2023)", "Corn (2024)", "Soybean Meal (2020)", "Soybean Meal (2023)", "Fishmeal (2021)", "Fishmeal (2024 H1)"],
+            datasets: [{
+                label: 'Average Procurement Price (CNY/ton)',
+                data: [2664.77, 2565, 2116, 3039, 4082.68, 12450, 14697],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)', 'rgba(54, 162, 235, 0.6)', 'rgba(54, 162, 235, 0.6)', // Corn
+                    'rgba(255, 206, 86, 0.6)', 'rgba(255, 206, 86, 0.6)', // Soybean Meal
+                    'rgba(75, 192, 192, 0.6)', 'rgba(75, 192, 192, 0.6)' // Fishmeal
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)', 'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)', 'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)', 'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        feedComparison2024: {
+            labels: ["Pig Feed", "Broiler Feed", "Layer Feed", "Aquatic Feed", "Ruminant Feed", "Pet Feed"],
+            datasets: [{
+                label: '2024 Full Year Production (million tons)',
+                data: [143.913, 97.542, 32.361, 22.62, 14.494, 1.599],
+                backgroundColor: [
+                    'rgba(239, 68, 68, 0.6)', // red
+                    'rgba(249, 115, 22, 0.6)', // orange
+                    'rgba(168, 85, 247, 0.6)', // purple
+                    'rgba(59, 130, 246, 0.6)', // blue
+                    'rgba(16, 185, 129, 0.6)', // emerald
+                    'rgba(236, 72, 153, 0.6)' // pink
+                ],
+                borderColor: [
+                    'rgba(239, 68, 68, 1)',
+                    'rgba(249, 115, 22, 1)',
+                    'rgba(168, 85, 247, 1)',
+                    'rgba(59, 130, 246, 1)',
+                    'rgba(16, 185, 129, 1)',
+                    'rgba(236, 72, 153, 1)'
+                ],
+                borderWidth: 1
+            }]
+        }
+    };
+
+    function createOrUpdateChart(chartInstance, canvasId, type, data, options = {}) {
+        const ctx = document.getElementById(canvasId).getContext('2d');
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+        const defaultOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: false, ticks: { callback: function(value) { return value + ' million tons'; } } },
+                x: { ticks: { callback: function(value) { const label = this.getLabelForValue(value); return label.length > 8 ? label.match(/.{1,8}/g) : label; } } }
+            },
+            plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } }
+        };
+        return new Chart(ctx, { type, data, options: {...defaultOptions, ...options} });
+    }
+    
+    function createBarChart(chartInstance, canvasId, data, options = {}) {
+         const ctx = document.getElementById(canvasId).getContext('2d');
+        if (chartInstance) {
+            chartInstance.destroy();
+        }
+        const defaultOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true, ticks: { callback: function(value) { return value; } } }, // Generic y-axis
+                x: { ticks: { callback: function(value) { const label = this.getLabelForValue(value); return label.length > 6 ? label.match(/.{1,6}/g) : label; } } }
+            },
+            plugins: { legend: { position: 'top' }, tooltip: { mode: 'index', intersect: false } }
+        };
+        return new Chart(ctx, { type: 'bar', data, options: {...defaultOptions, ...options} });
+    }
+
+    function activateSection(hash) {
+        sections.forEach(section => {
+            if ('#' + section.id === hash) {
+                section.classList.add('active');
+            } else {
+                section.classList.remove('active');
+            }
+        });
+        mainNavLinks.forEach(link => {
+            if (link.getAttribute('href') === hash) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
+    }
+
+    mainNavLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetHash = this.getAttribute('href');
+            window.location.hash = targetHash;
+        });
+    });
+
+    window.addEventListener('hashchange', function () {
+        activateSection(window.location.hash || '#overview');
+    });
+
+    activateSection(window.location.hash || '#overview');
+
+    totalProductionChartInstance = createOrUpdateChart(totalProductionChartInstance, 'totalProductionChart', 'line', feedData.general, { scales: { y: { ticks: { callback: function(value) { return value + ' million tons'; } } } } });
+    
+    pigStockChartInstance = createOrUpdateChart(pigStockChartInstance, 'pigStockChart', 'line', feedData.pigStock, { scales: { y: { ticks: { callback: function(value) { return value + ' million heads';} } } } });
+    poultryStockChartInstance = createOrUpdateChart(poultryStockChartInstance, 'poultryStockChart', 'line', feedData.poultryStock, { scales: { y: { ticks: { callback: function(value) { return value + ' billion birds';} } } } });
+    rawMaterialPriceChartInstance = createBarChart(rawMaterialPriceChartInstance, 'rawMaterialPriceChart', feedData.rawMaterialPrices, { scales: { y: { ticks: { callback: function(value) { return value + ' CNY/ton';} } } } });
+    feedVarietiesComparisonChartInstance = createBarChart(feedVarietiesComparisonChartInstance, 'feedVarietiesComparisonChart', feedData.feedComparison2024, { indexAxis: 'y', scales: { y: { ticks: { callback: function(value) { const label = this.getLabelForValue(value); return label.length > 8 ? label.match(/.{1,8}/g) : label; } } }, x: { ticks: { callback: function(value) { return value + ' million tons';} } } } });
+
+
+    if (feedTypeTabsContainer) {
+        feedTypeTabsContainer.addEventListener('click', function(e) {
+            if (e.target.tagName === 'BUTTON') {
+                const feedType = e.target.dataset.type;
+                const buttons = feedTypeTabsContainer.querySelectorAll('button');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                e.target.classList.add('active');
+                
+                feedTypeTitle.textContent = e.target.textContent + " Production Trend";
+                feedTypeDescription.textContent = feedData[feedType].description;
+                feedVarietyChartInstance = createOrUpdateChart(feedVarietyChartInstance, 'feedVarietyChart', 'line', feedData[feedType], { scales: { y: { ticks: { callback: function(value) { return value + ' million tons'; } } } } });
+            }
+        });
+        // Activate the first tab by default
+        feedTypeTabsContainer.querySelector('button').click();
+    }
+
+    const ecommerceModels = [
+        { name: "B2B E-commerce", icon: "🏢", details: "E.g., Alibaba 1688, JD Supply Chain Platform. Offers smart selection, bulk purchasing, supply chain finance. Pros: improved efficiency, reduced costs. Challenges: platform standardization, high initial investment." },
+        { name: "O2O/Integrated Retail", icon: "🏪", details: "E.g., Hema Fresh. Integrates online and offline, store as warehouse, fast delivery. Pros: enhanced consumer experience, data-driven operations. Challenges: high operating costs, quality control difficulties." },
+        { name: "C2B/Social E-commerce", icon: "🧑‍🤝‍🧑", details: "E.g., Pinduoduo. Demand-driven production, social group buying. Pros: reduced inventory risk, quick market response. Challenges: product standardization difficulty, reliance on platform bargaining power." },
+        { name: "Live-streaming E-commerce", icon: "📺", details: "Douyin, Kuaishou. Real-time interaction, KOL recommendations. Pros: highly interactive, high trust, low barrier to entry. Challenges: product quality risk, false advertising, reliance on streamers." },
+        { name: "Vertical Agricultural E-commerce", icon: "🌱", details: "C2B/C2F (consumer-to-farmer customized production), F2C (farm-to-consumer direct supply). Pros: builds consumer trust through direct sourcing. Challenges: logistics, scalability." }
+    ];
+
+    const ecommerceModelsContainer = document.getElementById('ecommerceModelsContainer');
+    if (ecommerceModelsContainer) {
+        ecommerceModels.forEach(model => {
+            const card = document.createElement('div');
+            card.className = 'bg-slate-50 p-4 rounded-lg shadow-md border border-slate-200 card-clickable';
+            card.innerHTML = `
+                <div class="flex items-center mb-2">
+                    <span class="text-3xl mr-3">${model.icon}</span>
+                    <h4 class="text-lg font-semibold text-amber-700">${model.name}</h4>
+                </div>
+                <p class="text-sm text-slate-600">${model.details}</p>
+            `;
+            ecommerceModelsContainer.appendChild(card);
+        });
+    }
+});
+</script>
+</body>
+</html>
